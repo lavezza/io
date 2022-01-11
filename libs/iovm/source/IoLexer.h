@@ -135,6 +135,7 @@ int IoLexer_readWhitespaceChar(IoLexer *self);
 int IoLexer_readNumber(IoLexer *self);
 int IoLexer_readDecimal(IoLexer *self);
 int IoLexer_readHexNumber(IoLexer *self);
+int IoLexer_readOctalNumber(IoLexer *self);
 
 // parsing
 

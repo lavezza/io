@@ -1089,7 +1089,14 @@ int IoLexer_readDigits(IoLexer *self) {
 }
 
 int IoLexer_readNumber(IoLexer *self) {
-    return (IoLexer_readHexNumber(self) || IoLexer_readDecimal(self));
+    /* 
+    Order is important! 
+    IoLexer_readDecimal needs to be last
+    or it will choke on 0x123 and 0o123 as a bad decimal number
+    */
+    return  IoLexer_readHexNumber(self) || 
+            IoLexer_readOctalNumber(self) || 
+            IoLexer_readDecimal(self);
 }
 
 int IoLexer_readExponent(IoLexer *self) {
@@ -1158,6 +1165,27 @@ int IoLexer_readHexNumber(IoLexer *self) {
 
     if (read && IoLexer_grabLength(self)) {
         IoLexer_grabTokenType_(self, HEXNUMBER_TOKEN);
+        IoLexer_popPos(self);
+        return 1;
+    }
+
+    IoLexer_popPosBack(self);
+    return 0;
+}
+
+int IoLexer_readOctalNumber(IoLexer *self) {
+    int read = 0;
+
+    IoLexer_pushPos(self);
+    
+    if (IoLexer_readChar_(self, '0') && IoLexer_readCharAnyCase_(self, 'o')) {
+        while (IoLexer_readDigits(self)) {
+            read++;
+        }
+    }
+
+    if (read && IoLexer_grabLength(self)) {
+        IoLexer_grabTokenType_(self, OCTALNUMBER_TOKEN);
         IoLexer_popPos(self);
         return 1;
     }

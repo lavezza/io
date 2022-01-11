@@ -301,9 +301,17 @@ double IoSeq_rawAsDoubleFromHex(IoSeq *self) {
 
 double IoSeq_rawAsDoubleFromOctal(IoSeq *self) {
     char *s = IoSeq_asCString(self);
+    char tempCopy[strlen(s) - 2 + 1]; 
     unsigned int i;
+    
+    /* 
+    Unlike hex numbers with 0x, sscanf doesn't assume 0o before octals
+    Strip off the first two characters ("0o" or "0O")
+    Doing this to a copy so we don't change the original Sequence
+    */
+    memmove(tempCopy, s+2, strlen(s) - 2 + 1);
 
-    sscanf(s, "%o", &i);
+    sscanf(tempCopy, "%o", &i);
     return (double)i;
 }
 

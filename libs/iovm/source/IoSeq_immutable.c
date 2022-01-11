@@ -678,6 +678,10 @@ IO_METHOD(IoSeq, asNumber) {
         return IONUMBER(IoSeq_rawAsDoubleFromHex(self));
     }
 
+    if (size > 2 && s[0] == '0' && (s[1] == 'o' || s[1] == 'O')) {
+        return IONUMBER(IoSeq_rawAsDoubleFromOctal(self));
+    }
+
     if (errno == ERANGE || endp == s) {
         return IONUMBER(NAN);
     }

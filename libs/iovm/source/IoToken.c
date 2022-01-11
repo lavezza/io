@@ -47,6 +47,8 @@ const char *IoToken_typeName(IoToken *self) {
         return "Number";
     case HEXNUMBER_TOKEN:
         return "HexNumber";
+    case OCTALNUMBER_TOKEN:
+        return "OctalNumber";
     }
     return "UNKNOWN_TOKEN";
 }
@@ -135,6 +137,7 @@ int IoTokenType_isValidMessageName(IoTokenType self) {
     case TRIQUOTE_TOKEN:
     case NUMBER_TOKEN:
     case HEXNUMBER_TOKEN:
+    case OCTALNUMBER_TOKEN:
         return 1;
     default:
         return 0;

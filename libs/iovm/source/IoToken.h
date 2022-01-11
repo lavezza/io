@@ -25,7 +25,8 @@ typedef enum {
 
     COMMENT_TOKEN,
     NUMBER_TOKEN,
-    HEXNUMBER_TOKEN
+    HEXNUMBER_TOKEN,
+    OCTALNUMBER_TOKEN
 } IoTokenType;
 
 typedef struct IoToken IoToken;

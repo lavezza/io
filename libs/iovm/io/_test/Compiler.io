@@ -249,7 +249,8 @@ Message do(
 	tokenName := token name
 	if (tokenType == "TriQuote", return tokenName exclusiveSlice(3, -3) unescape)
 	if (tokenType == "MonoQuote", return tokenName exclusiveSlice(1, -1) unescape)
-	if (tokenType == "Number" or tokenType == "HexNumber", return tokenName asNumber)
+	if (tokenType == "Number" or tokenType == "HexNumber" or tokenType == "OctalNumber", 
+		return tokenName asNumber)
 	nil
 	)
 
@@ -299,11 +300,13 @@ Message do(
 Token := Object clone do(
 	isMessage := method(
 	t := self type
-	t == "Identifier" or t == "Operator" or t == "MonoQuote" or t == "TriQuote" or t == "Number" or t == "HexNumber"
+	t == "Identifier" or t == "Operator" or t == "MonoQuote" or t == "TriQuote" or 
+		t == "Number" or t == "HexNumber" or t == "OctalNumber"
 	)
 	isLiteral := method(
 	t := self type
-	t == "MonoQuote" or t == "TriQuote" or t == "Number" or t == "HexNumber"
+	t == "MonoQuote" or t == "TriQuote" or t == "Number" or t == "HexNumber" or 
+		t == "OctalNumber"
 	)
 )
 

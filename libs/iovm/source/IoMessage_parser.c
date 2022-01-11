@@ -46,6 +46,10 @@ void IoMessage_ifPossibleCacheToken_(IoMessage *self, IoToken *p) {
         r = IONUMBER(IoSeq_rawAsDoubleFromHex(method));
         break;
 
+    case OCTALNUMBER_TOKEN:
+        r = IONUMBER(IoSeq_rawAsDoubleFromOctal(method));
+        break;
+
     default:
         if (IoSeq_rawEqualsCString_(method, "nil")) {
             r = IONIL(self);
